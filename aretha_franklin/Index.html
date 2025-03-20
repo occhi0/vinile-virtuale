@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aretha Franklin - Playlist</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 2rem;
+      font-family: 'Verdana', sans-serif;
+      background: linear-gradient(135deg, #1e1e1e, #4a154b);
+      color: #ffffff;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      text-shadow: 1px 1px 2px #000;
+    }
+
+    #now-playing {
+      margin: 1.5rem 0;
+      font-weight: bold;
+      font-size: 1.2rem;
+      text-shadow: 1px 1px 2px #000;
+    }
+
+    audio {
+      width: 100%;
+      max-width: 600px;
+      margin: 1rem auto;
+      display: block;
+    }
+
+    button {
+      margin: 0.5rem;
+      padding: 0.7rem 1.2rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: none;
+      background: #a020f0;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 0 8px rgba(160, 32, 240, 0.5);
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    button:hover {
+      background: #6a0dad;
+      transform: scale(1.05);
+    }
+
+    .cover {
+      margin-top: 2rem;
+    }
+
+    .cover img {
+      max-width: 300px;
+      width: 100%;
+      height: auto;
+      border: 4px solid #6a0dad;
+      box-shadow: 0 0 20px rgba(160, 32, 240, 0.4);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Aretha Franklin</h1>
+  <p id="now-playing">🎶 Nessun brano in riproduzione</p>
+
+  <div style="margin: 1.5rem 0;">
+    <button onclick="startPlaylist()">▶️ Avvia Playlist</button>
+  </div>
+
+  <audio id="player" controls></audio>
+
+  <div style="margin-top: 1rem; display: flex; justify-content: center; gap: 1rem;">
+    <button onclick="previousTrack()">⏮️ Indietro</button>
+    <button onclick="nextTrack()">⏭️ Avanti</button>
+  </div>
+
+  <div class="cover">
+    <img src="cover.jpg" alt="Copertina Aretha Franklin">
+  </div>
+
+  <script>
+    const playlist = [
+      { title: "[You Make Me Feel Like] A Natural Woman", file: "aretha_franklin/[You Make Me Feel Like] A Natural Woman.mp3" },
+      { title: "Chain of Fools", file: "aretha_franklin/Chain of Fools.mp3" },
+      { title: "Don't Play That Song", file: "aretha_franklin/Don't Play That Song.mp3" },
+      { title: "Fredoom", file: "aretha_franklin/Fredoom.mp3" },
+      { title: "Good Times", file: "aretha_franklin/Good Times.mp3" },
+      { title: "I Never Loved a Man", file: "aretha_franklin/I Never Loved a Man.mp3" },
+      { title: "I Say a Little Prayer", file: "aretha_franklin/I Say a Little Prayer.mp3" },
+      { title: "Oh No Not My Baby", file: "aretha_franklin/Oh No Not My Baby.mp3" },
+      { title: "Respect", file: "aretha_franklin/Respect.mp3" },
+      { title: "Somewhere Over The Rainbow", file: "aretha_franklin/Somewhere Over The Rainbow.mp3" },
+      { title: "Son of a Preacher Man", file: "aretha_franklin/Son of a Preacher Man.mp3" },
+      { title: "Spanish Harlem", file: "aretha_franklin/Spanish Harlem.mp3" },
+      { title: "The House That Jack Built", file: "aretha_franklin/The House That Jack Built.mp3" },
+      { title: "Think", file: "aretha_franklin/Think.mp3" },
+      { title: "Until You Come Back to Me", file: "aretha_franklin/Until You Come Back to Me.mp3" }
+    ];
+
+    let current = 0;
+    const player = document.getElementById('player');
+    const nowPlaying = document.getElementById('now-playing');
+
+    function playCurrentTrack() {
+      const track = playlist[current];
+      player.src = track.file;
+      nowPlaying.textContent = `🎶 In riproduzione: ${track.title}`;
+      player.play();
+    }
+
+    function startPlaylist() {
+      current = 0;
+      playCurrentTrack();
+    }
+
+    function nextTrack() {
+      if (current < playlist.length - 1) {
+        current++;
+        playCurrentTrack();
+      }
+    }
+
+    function previousTrack() {
+      if (current > 0) {
+        current--;
+        playCurrentTrack();
+      }
+    }
+
+    player.addEventListener('ended', () => {
+      if (current < playlist.length - 1) {
+        current++;
+        playCurrentTrack();
+      } else {
+        nowPlaying.textContent = '🎵 Playlist terminata.';
+      }
+    });
+  </script>
+
+</body>
+</html>
